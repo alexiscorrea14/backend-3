@@ -1,0 +1,27 @@
+{
+  "name": "backend-3",
+  "version": "1.0.0",
+  "description": "Entrega N°1 Backend 3 - Mocking y base de datos MongoDB",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "backend3",
+    "mongodb",
+    "express",
+    "faker",
+    "mocking"
+  ],
+  "author": "Alexis Correa",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "mongoose": "^7.8.7"
+  }
+}
