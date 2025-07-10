@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import mocksRouter from "./src/routers/mocks.router.js";
 import adoptionRouter from "./src/routers/adoption.router.js";
+import usersRouter from "./src/routers/users.router.js";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./src/docs/swagger.js";
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/mocks", mocksRouter);
 app.use("/api/adoption", adoptionRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT || 3000;

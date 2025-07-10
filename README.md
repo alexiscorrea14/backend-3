@@ -7,7 +7,7 @@ DockerHub: [https://hub.docker.com/u/alexis1812](https://hub.docker.com/u/alexis
 
 ---
 
-## 🧰 Tecnologías
+##  Tecnologías
 
 - Node.js
 - Express.js
@@ -19,14 +19,14 @@ DockerHub: [https://hub.docker.com/u/alexis1812](https://hub.docker.com/u/alexis
 
 ---
 
-## 🐳 Imagen Docker
+##  Imagen Docker
 
-👉 Imagen pública de este proyecto:  
-📦 [https://hub.docker.com/r/alexis1812/backend3](https://hub.docker.com/r/alexis1812/backend3)
+Imagen pública de este proyecto:  
+ [https://hub.docker.com/r/alexis1812/backend3](https://hub.docker.com/r/alexis1812/backend3)
 
 ---
 
-## ▶️ Cómo ejecutar el proyecto con Docker
+##  Cómo ejecutar el proyecto con Docker
 
 ### 1. Requisitos:
 
@@ -37,6 +37,15 @@ DockerHub: [https://hub.docker.com/u/alexis1812](https://hub.docker.com/u/alexis
 
 ### 2. Cloná este repositorio:
 
-```bash
+git clone https://github.com/alexiscorrea14/backend-3.git
+cd backend-3
+
+###  Cómo ejecutar el proyecto con Docker
+
+1. Requisitos:
+- Tener Docker Desktop instalado
+- Tener MongoDB Atlas activo y el MONGO_URL configurado en un archivo `.env`
+
+2. Clonar el repositorio: 
 git clone https://github.com/alexiscorrea14/backend-3.git
 cd backend-3

@@ -2,51 +2,78 @@ import { Adoption } from "../models/adoption.model.js";
 
 export async function getAllAdoptions(req, res) {
   try {
-    const adoptions = await Adoption.find().lean();
+    const adoptions = await Adoption.find().populate("userId petId").lean();
     res.json({ status: "success", data: adoptions });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Error getAllAdoptions:", error);
+    res.status(500).json({ status: "error", message: "Error al obtener adopciones" });
   }
 }
 
 export async function getAdoptionById(req, res) {
+  const { id } = req.params;
   try {
-    const adoption = await Adoption.findById(req.params.id).lean();
-    if (!adoption) return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
+    const adoption = await Adoption.findById(id).populate("userId petId").lean();
+    if (!adoption) {
+      return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
+    }
     res.json({ status: "success", data: adoption });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Error getAdoptionById:", error);
+    res.status(500).json({ status: "error", message: "Error al obtener adopción" });
   }
 }
 
 export async function createAdoption(req, res) {
+  const { userId, petId } = req.body;
+
+  if (!userId || !petId) {
+    return res.status(400).json({ status: "error", message: "Faltan userId o petId" });
+  }
+
   try {
-    const { userId, petId } = req.body;
-    if (!userId || !petId) return res.status(400).json({ status: "error", message: "Faltan datos requeridos" });
-    const newAdoption = await Adoption.create({ userId, petId, status: "pending" });
-    res.status(201).json({ status: "success", data: newAdoption });
+    const newAdoption = new Adoption({ userId, petId });
+    const savedAdoption = await newAdoption.save();
+    res.status(201).json({ status: "success", data: savedAdoption });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Error createAdoption:", error);
+    res.status(500).json({ status: "error", message: "Error al crear adopción" });
   }
 }
 
 export async function updateAdoption(req, res) {
+  const { id } = req.params;
+  const { status } = req.body;
+
   try {
-    const updateData = req.body;
-    const adoption = await Adoption.findByIdAndUpdate(req.params.id, updateData, { new: true }).lean();
-    if (!adoption) return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
-    res.json({ status: "success", data: adoption });
+    const adoptionUpdated = await Adoption.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    ).lean();
+
+    if (!adoptionUpdated) {
+      return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
+    }
+
+    res.json({ status: "success", data: adoptionUpdated });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Error updateAdoption:", error);
+    res.status(500).json({ status: "error", message: "Error al actualizar adopción" });
   }
 }
 
 export async function deleteAdoption(req, res) {
+  const { id } = req.params;
+
   try {
-    const adoption = await Adoption.findByIdAndDelete(req.params.id).lean();
-    if (!adoption) return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
+    const deleted = await Adoption.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ status: "error", message: "Adopción no encontrada" });
+    }
     res.json({ status: "success", message: "Adopción eliminada" });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Error deleteAdoption:", error);
+    res.status(500).json({ status: "error", message: "Error al eliminar adopción" });
   }
 }
